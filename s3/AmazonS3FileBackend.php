@@ -314,7 +314,7 @@ class AmazonS3FileBackend extends FileBackendStore {
 		$ret = $this->runWithExceptionHandling( __FUNCTION__, function ()
 			use ( $params, $container, $bucket, $key, $contentType, $sha1Hash ) {
 			return $this->client->putObject( array_filter( [
-				'ACL' => $this->isSecure( $container ) ? 'private' : 'public-read',
+				// 'ACL' => $this->isSecure( $container ) ? 'private' : 'public-read',
 				'Body' => $params['content'],
 				'Bucket' => $bucket,
 				'CacheControl' => $params['headers']['cache-control'],
@@ -423,7 +423,7 @@ class AmazonS3FileBackend extends FileBackendStore {
 		$ret = $this->runWithExceptionHandling( __FUNCTION__, function ()
 			use ( $dstContainer, $dstBucket, $params, $srcBucket, $srcKey, $dstKey ) {
 			return $this->client->copyObject( array_filter( [
-				'ACL' => $this->isSecure( $dstContainer ) ? 'private' : 'public-read',
+				// 'ACL' => $this->isSecure( $dstContainer ) ? 'private' : 'public-read',
 				'Bucket' => $dstBucket,
 				'CacheControl' => $params['headers']['cache-control'],
 				'ContentDisposition' => $params['headers']['content-disposition'],
@@ -1079,7 +1079,7 @@ class AmazonS3FileBackend extends FileBackendStore {
 
 				try {
 					$this->client->createBucket( [
-						'ACL' => 'private', // No listing. Note: this doesn't affect ACL of objects
+						// 'ACL' => 'private', // No listing. Note: this doesn't affect ACL of objects
 						'Bucket' => $bucket
 					] );
 
