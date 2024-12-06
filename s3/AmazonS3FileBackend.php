@@ -642,6 +642,15 @@ class AmazonS3FileBackend extends FileBackendStore {
 			return null;
 		}
 
+		// We just assume that all local-thumb (/thumb) images do not exist.
+		// This is somewhat risky, as the thumbs do exist but are presumed to be not there.
+		// But this allows us to avoid mass API calls for every thumb (which all end up not existing anyway) because 
+		// the images are too small.
+		// This is only safe for local-thumb and not safe for public or deleted paths.
+		if ( strpos( $src, '/local-thumb/' ) !== false ) {
+			return false;
+		}
+
 		// Note: we don't use runWithExceptionHandling() here for two reasons:
 		// 1) we don't need NotFound errors logged (these are not errors, because doGetFileStat
 		// is meant to be used for "does this file exist" checks),
